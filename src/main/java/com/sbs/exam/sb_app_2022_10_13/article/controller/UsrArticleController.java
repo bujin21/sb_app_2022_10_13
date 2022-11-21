@@ -12,13 +12,13 @@ import java.util.List;
 
 @Controller
 public class UsrArticleController {
-  // 인스턴스 변수 시작
+
   @Autowired
   private ArticleService articleService;
 
 
 
-  // 액션 메서드 시작
+
   @RequestMapping("/usr/article/doAdd")
   @ResponseBody
   public Article doAdd(String title, String body) {
@@ -71,6 +71,5 @@ public class UsrArticleController {
 
     return id + "번 게시물이 수정되었습니다.";
   }
-  // 액션 메서드 끝
 
 }
