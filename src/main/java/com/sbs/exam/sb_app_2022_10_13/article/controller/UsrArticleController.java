@@ -16,13 +16,12 @@ public class UsrArticleController {
   @Autowired
   private ArticleService articleService;
 
-
-
-
   @RequestMapping("/usr/article/doAdd")
   @ResponseBody
   public Article doAdd(String title, String body) {
-    Article article = articleService.writeArticle(title, body);
+    int id  = articleService.writeArticle(title, body);
+
+    Article article = articleService.getArticle(id);
 
     return article;
   }
@@ -32,9 +31,10 @@ public class UsrArticleController {
   public List<Article> getArticles() {
     return articleService.getArticles();
   }
+
   @RequestMapping("/usr/article/getArticle")
   @ResponseBody
-  public Object getArticleAction(int id) {
+  public Object getArticle(int id) {
     Article article = articleService.getArticle(id);
 
     if(article == null){
