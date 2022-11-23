@@ -27,6 +27,29 @@ public class UsrMemberController {
       return "해당 로그인아이디는 이미 사용중입니다.";
     }
 
+    if( loginId == null ) {
+      return "loginId(을)를 입력 해주세요.";
+    }
+
+    if( loginPw == null ) {
+      return "loginPw(을)를 입력 해주세요.";
+    }
+
+    if( name == null ) {
+      return "name(을)를 입력 해주세요.";
+    }
+
+    if( nickname == null ) {
+      return "nickname(을)를 입력 해주세요.";
+    }
+
+    if( cellphoneNo == null ) {
+      return "cellphoneNo(을)를 입력 해주세요.";
+    }
+
+    if( email == null ) {
+      return "email(을)를 입력 해주세요.";
+    }
     return member;
   }
 
