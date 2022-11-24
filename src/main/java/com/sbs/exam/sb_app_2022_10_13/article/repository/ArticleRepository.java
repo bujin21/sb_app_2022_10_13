@@ -15,21 +15,21 @@ public interface ArticleRepository {
            title = #{title},
            `body` = #{body}
           """)
-  public void writeArticle(String title, String body);
+  public void writeArticle(@Param("title") String title, @Param("body") String body);
 
   @Select("""
           SELECT *
           FROM article
           WHERE id = #{id}
           """)
-  public Article getArticle(int id);
+  public Article getArticle(@Param("id") int id);
 
   @Delete("""
           DELETE
           FROM article
           WHERE id = #{id}
           """)
-  public void deleteArticle(int id) ;
+  public void deleteArticle(@Param("id") int id) ;
 
   @Select("""
           SELECT *
@@ -53,7 +53,7 @@ public interface ArticleRepository {
           WHERE id = #{id}
           </script>
           """)
-  public void modifyArticle(int id, String title, String body);
+  public void modifyArticle(@Param("id") int id, @Param("title") String title, @Param("body") String body);
 
   @Select("SELECT LAST_INSERT_ID()")
   public int getLastInsertId();
