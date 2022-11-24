@@ -1,4 +1,4 @@
-package com.sbs.exam.sb_app_2022_10_13.article.repository;
+package com.sbs.exam.sb_app_2022_10_13.member.repository;
 
 import com.sbs.exam.sb_app_2022_10_13.article.vo.Member;
 import org.apache.ibatis.annotations.Insert;
