@@ -1,4 +1,4 @@
-package com.sbs.exam.sb_app_2022_10_13;
+package com.sbs.exam.sb_app_2022_10_13.config;
 
 import com.sbs.exam.sb_app_2022_10_13.intercepter.BeforeActionInterceptor;
 import com.sbs.exam.sb_app_2022_10_13.intercepter.NeedLoginInterceptor;
@@ -12,11 +12,9 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
   // beforeActionInterceptor 인터셉터 불러오기
   @Autowired
   BeforeActionInterceptor beforeActionInterceptor;
-
   // needLoginInterceptor 인터셉터 불러오기
   @Autowired
-  NeedLoginInterceptor NeedLoginInterceptor;
-
+  NeedLoginInterceptor needLoginInterceptor;
   // 이 함수는 인터셉터를 적용하는 역할을 합니다.
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
@@ -26,8 +24,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
         .excludePathPatterns("/js/**")
         .excludePathPatterns("/error");
 
-
-    registry.addInterceptor(NeedLoginInterceptor)
+    registry.addInterceptor(needLoginInterceptor)
         .addPathPatterns("/usr/article/write")
         .addPathPatterns("/usr/article/doWrite")
         .addPathPatterns("/usr/article/modify")
