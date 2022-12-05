@@ -4,10 +4,12 @@ import com.sbs.exam.sb_app_2022_10_13.service.MemberService;
 import com.sbs.exam.sb_app_2022_10_13.vo.Member;
 import com.sbs.exam.sb_app_2022_10_13.util.Ut;
 import com.sbs.exam.sb_app_2022_10_13.vo.ResultData;
+import com.sbs.exam.sb_app_2022_10_13.vo.Rq;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -67,14 +69,10 @@ public class UsrMemberController {
 
   @RequestMapping("/usr/member/doLogin")
   @ResponseBody
-  public String doLogin(HttpSession httpSession, String loginId, String loginPw) {
-    boolean isLogined = false;
+  public String doLogin(HttpServletRequest req, String loginId, String loginPw) {
+    Rq rq = (Rq) req.getAttribute("rq");
 
-    if (httpSession.getAttribute("loginedMemberId") != null ) {
-      isLogined = true;
-    }
-
-    if ( isLogined ) {
+    if ( rq.isLogined() ) {
       return Ut.jsHistoryBack("이미 로그인 되었습니다.");
     }
 
@@ -96,26 +94,26 @@ public class UsrMemberController {
       return Ut.jsHistoryBack("비밀번호가 일치하지 않습니다.");
     }
 
-    httpSession.setAttribute("loginedMemberId", member.getId());
+   rq.login(member);
 
     return Ut.jsReplace( Ut.f("%s님 환영합니다.", member.getNickname()),"/");
   }
 
   @RequestMapping("/usr/member/doLogout")
   @ResponseBody
-  public ResultData doLogout(HttpSession httpSession){
+  public ResultData doLogout(HttpSession httpSession) {
     boolean isLogined = false;
 
-    if (httpSession.getAttribute("loginedMemberId") == null ){
+    if (httpSession.getAttribute("loginedMemberId") == null ) {
       isLogined = true;
     }
 
-    if(isLogined){
+    if ( isLogined ) {
       return ResultData.from("S-1", "이미 로그아웃 상태입니다.");
     }
 
-    httpSession.removeAttribute("loginMemberId");
+    httpSession.removeAttribute("loginedMemberId");
 
-    return ResultData.from("S-2","로그아웃 되었습니다.");
+    return ResultData.from("S-2", "로그아웃 되었습니다.");
   }
 }
