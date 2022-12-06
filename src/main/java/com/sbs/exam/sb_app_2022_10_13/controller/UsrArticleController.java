@@ -93,7 +93,7 @@ public class UsrArticleController {
     return Ut.jsReplace(Ut.f("%d번 게시물이 삭제되었습니다.", id), "../article/list");
   }
   @RequestMapping("/usr/article/modify")
-  public String showModify(HttpServletRequest req, int id, String title, String body) {
+  public String showModify(HttpServletRequest req, Model model, int id) {
     Rq rq = (Rq) req.getAttribute("rq");
 
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
@@ -101,6 +101,8 @@ public class UsrArticleController {
     if ( article == null ) {
       return rq.historyBackJsOnView(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
     }
+
+    model.addAttribute("article", article);
 
     ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article);
 
