@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -35,18 +34,18 @@ public class UsrArticleController {
       return rq.jsHistoryBack("로그인 후 이용해주세요.");
     }
 
-    if (Ut.emty(title)) {
+    if (Ut.empty(title)) {
       return rq.jsHistoryBack("title(을)를 입력해주세요.");
     }
 
-    if (Ut.emty(body)) {
+    if (Ut.empty(body)) {
       return rq.jsHistoryBack("body(을)를 입력해주세요.");
     }
 
     ResultData<Integer> writeArticleRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body);
     int id = writeArticleRd.getData1();
 
-    if(Ut.emty(replaceUri)){
+    if(Ut.empty(replaceUri)){
       replaceUri = Ut.f("../article/detail?id=%d", id);
     }
 

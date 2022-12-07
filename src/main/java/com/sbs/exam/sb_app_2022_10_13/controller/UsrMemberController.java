@@ -27,27 +27,27 @@ public class UsrMemberController {
                            String cellphoneNo, String email) {
 
 
-    if( Ut.emty(loginId)) {
+    if( Ut.empty(loginId)) {
       return ResultData.from("F-1", "loginId(을)를 입력 해주세요.");
     }
 
-    if( Ut.emty(loginPw)) {
+    if( Ut.empty(loginPw)) {
       return ResultData.from("F-2", "loginPw(을)를 입력 해주세요.");
     }
 
-    if(  Ut.emty(name)) {
+    if(  Ut.empty(name)) {
       return ResultData.from("F-3", "name(을)를 입력 해주세요.");
     }
 
-    if(  Ut.emty(nickname)) {
+    if(  Ut.empty(nickname)) {
       return ResultData.from("F-4", "nickname(을)를 입력 해주세요.");
     }
 
-    if(  Ut.emty(cellphoneNo)) {
+    if(  Ut.empty(cellphoneNo)) {
       return ResultData.from("F-5", "cellphoneNo(을)를 입력 해주세요.");
     }
 
-    if(  Ut.emty(email)) {
+    if(  Ut.empty(email)) {
       return ResultData.from("F-6", "email(을)를 입력 해주세요.");
     }
 
@@ -76,11 +76,11 @@ public class UsrMemberController {
       return rq.jsHistoryBack("이미 로그인 되었습니다.");
     }
 
-    if( Ut.emty(loginId) ) {
+    if( Ut.empty(loginId) ) {
       return rq.jsHistoryBack("loginId(을)를 입력 해주세요.");
     }
 
-    if( Ut.emty(loginPw) ) {
+    if( Ut.empty(loginPw) ) {
       return rq.jsHistoryBack("loginPw(을)를 입력 해주세요.");
     }
 

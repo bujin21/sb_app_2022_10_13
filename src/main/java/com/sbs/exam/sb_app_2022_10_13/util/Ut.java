@@ -1,7 +1,7 @@
 package com.sbs.exam.sb_app_2022_10_13.util;
 
 public class Ut {
-  public static boolean emty(Object obj) {
+  public static boolean empty(Object obj) {
     if(obj == null){
       return true;
     }
