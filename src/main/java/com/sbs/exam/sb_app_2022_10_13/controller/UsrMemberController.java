@@ -16,16 +16,17 @@ import javax.servlet.http.HttpSession;
 public class UsrMemberController {
 
   private MemberService memberService;
+  private Rq rq;
 
-  public UsrMemberController(MemberService memberService){
+  public UsrMemberController(MemberService memberService, Rq rq){
     this.memberService = memberService;
+    this.rq = rq;
   }
 
   @RequestMapping("/usr/member/doJoin")
   @ResponseBody
   public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname,
-                           String cellphoneNo, String email) {
-
+                                   String cellphoneNo, String email) {
 
     if( Ut.empty(loginId)) {
       return ResultData.from("F-1", "loginId(을)를 입력 해주세요.");
