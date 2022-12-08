@@ -80,5 +80,18 @@ public interface ArticleRepository {
           ORDER BY A.id DESC
           </script>
           """)
-  List<Article> getArticles(int boardId);
+  List<Article> getArticles(@Param("boardId") int boardId);
+
+  @Select("""
+          <script>
+          SELECT COUNT(*) AS cnt
+          FROM article AS A
+          WHERE 1
+          <if test="boardId != 0">
+            AND A.boardId = #{boardId}
+          </if>
+          ORDER BY A.id DESC
+          </script>
+          """)
+  int getArticleCount(@Param("boardId") int boardId);
 }
