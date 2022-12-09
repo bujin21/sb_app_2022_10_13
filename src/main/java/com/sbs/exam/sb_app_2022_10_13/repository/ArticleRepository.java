@@ -87,15 +87,14 @@ public interface ArticleRepository {
   List<Article> getArticles(@Param("boardId") int boardId, @Param("limitStart") int limitStart, @Param("limitTake") int limitTake);
 
   @Select("""
-          <script>
-          SELECT COUNT(*) AS cnt
-          FROM article AS A
+          <script>          
+          SELECT COUNT(*) AS cnt        
+          FROM article AS A          
           WHERE 1
           <if test="boardId != 0">
             AND A.boardId = #{boardId}
-          </if>
-          ORDER BY A.id DESC
-          </script>
+          </if>             
+          </script>          
           """)
-  int getArticleCount(@Param("boardId") int boardId);
+  int getArticlesCount(@Param("boardId") int boardId);
 }
