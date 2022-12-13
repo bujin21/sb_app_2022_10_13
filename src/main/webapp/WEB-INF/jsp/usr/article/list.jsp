@@ -7,7 +7,7 @@
 <section class="mt-5 con-min-width">
   <div class="con mx-auto px-3">
     <div>
-      게시물 개수 : ${articleCount}건
+      게시물 개수 : ${articlesCount}건
     </div>
     <div class="table-box-type-1">
       <table border="1">
