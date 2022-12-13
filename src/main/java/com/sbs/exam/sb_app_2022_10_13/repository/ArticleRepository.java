@@ -78,13 +78,29 @@ public interface ArticleRepository {
           <if test="boardId != 0">
             AND A.boardId = #{boardId}
           </if>
+          <if test="searchKeyword != ''">
+            <choose>
+               <when test="searchKeywordTypeCode == 'title'">
+                  AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+               </when>
+               <when test="searchKeywordTypeCode == 'body'">
+                  AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+               </when>
+               <otherwise>
+                  AND (
+                    A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+                    OR
+                    A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+               </otherwise>
+            </choose>
+          </if>
           ORDER BY A.id DESC
           <if test="limitTake != -1">
             LIMIT #{limitStart}, #{limitTake}
           </if>
           </script>
           """)
-  List<Article> getArticles(@Param("boardId") int boardId, @Param("limitStart") int limitStart, @Param("limitTake") int limitTake);
+  List<Article> getArticles(@Param("boardId") int boardId, @Param("searchKeywordTypeCode") String searchKeywordTypeCode, @Param("searchKeyword") String searchKeyword, @Param("limitStart") int limitStart, @Param("limitTake") int limitTake);
 
   @Select("""
           <script>          
@@ -112,5 +128,5 @@ public interface ArticleRepository {
           </if>
           </script>          
           """)
-  int getArticlesCount(@Param("boardId") int boardId, String searchKeywordTypeCode, String searchKeyword);
+  int getArticlesCount(@Param("boardId") int boardId, @Param("searchKeywordTypeCode") String searchKeywordTypeCode, @Param("searchKeyword") String searchKeyword);
 }
