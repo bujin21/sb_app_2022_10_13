@@ -68,8 +68,8 @@
         <c:set var="endPage" value="${page + pageMenuArmLen <= pagesCount ? page + pageMenuArmLen : pagesCount}" />
 
         <c:set var="pageBaseUri" value="?boardId=${boardId}" />
-        <c:set var="pageBaseUri" value="${pageBaseUri}&searchKeywordTypeCode=${searchKeywordTypeCode}" />
-        <c:set var="pageBaseUri" value="${pageBaseUri}&searchKeyword=${searchKeyword}" />
+        <c:set var="pageBaseUri" value="${pageBaseUri}&searchKeywordTypeCode=${param.searchKeywordTypeCode}" />
+        <c:set var="pageBaseUri" value="${pageBaseUri}&searchKeyword=${param.searchKeyword}" />
 
         <c:if test="${startPage > 1}">
           <a class="btn btn-sm" href="${pageBaseUri}&page=1">1</a>

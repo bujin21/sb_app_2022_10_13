@@ -129,4 +129,13 @@ public interface ArticleRepository {
           </script>          
           """)
   int getArticlesCount(@Param("boardId") int boardId, @Param("searchKeywordTypeCode") String searchKeywordTypeCode, @Param("searchKeyword") String searchKeyword);
+
+  @Update("""
+      <script>          
+        UPDATE article
+        SET hitCount = hitCount + 1
+        WHERE id = #{id}     
+      </script>          
+      """)
+  int increaseHitCount(@Param("id") int id);
 }
