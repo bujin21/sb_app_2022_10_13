@@ -138,4 +138,13 @@ public interface ArticleRepository {
       </script>          
       """)
   int increaseHitCount(@Param("id") int id);
+
+  @Select("""
+      <script>          
+      SELECT hitCount
+      FROM article
+      WHERE id = #{id}                    
+      </script>          
+      """)
+  int getArticleHitCount(@Param("id")int id);
 }
