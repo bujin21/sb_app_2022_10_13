@@ -59,7 +59,7 @@
           <tr>
             <th>조회수</th>
             <td>
-              <span class="badge badge-primary ">${article.hitCount}</span>
+              <span class="badge badge-primary article-detail__hit-Count">${article.hitCount}</span>
             </td>
           </tr>
           <tr>
