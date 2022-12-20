@@ -72,6 +72,12 @@
             </td>
           </tr>
           <tr>
+            <th>추천</th>
+            <td>
+              <span class="badge badge-primary article-detail__good-reaction">${article.extra__goodReactionPoint}</span>
+            </td>
+          </tr>
+          <tr>
             <th>제목</th>
             <td>${article.title}</td>
           </tr>
