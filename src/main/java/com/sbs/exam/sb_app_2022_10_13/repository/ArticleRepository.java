@@ -9,35 +9,35 @@ import java.util.List;
 public interface ArticleRepository {
 
   @Insert("""
-           INSERT INTO article
-           SET regDate = NOW(),
-           updateDate = NOW(),
-           boardId = ${boardId},
-           memberId = #{memberId},
-           title = #{title},
-           `body` = #{body}
-          """)
-  public void writeArticle(@Param("memberId")int memberId, @Param("boardId") int boardId, @Param("title") String title, @Param("body") String body);
+       INSERT INTO article
+       SET regDate = NOW(),
+       updateDate = NOW(),
+       boardId = ${boardId},
+       memberId = #{memberId},
+       title = #{title},
+       `body` = #{body}
+      """)
+  public void writeArticle(@Param("memberId") int memberId, @Param("boardId") int boardId, @Param("title") String title, @Param("body") String body);
 
   @Select("""
-         <script>
-         SELECT A.*,
-         M.nickname AS extra__writerName
-         FROM article AS A
-         LEFT JOIN `member` AS M
-         ON A.memberId = M.id
-         WHERE 1
-         AND A.id = #{id}
-         </script>
-         """)
+      <script>
+      SELECT A.*,
+      M.nickname AS extra__writerName
+      FROM article AS A
+      LEFT JOIN `member` AS M
+      ON A.memberId = M.id
+      WHERE 1
+      AND A.id = #{id}
+      </script>
+      """)
   public Article getForPrintArticle(@Param("id") int id);
 
   @Delete("""
-          DELETE
-          FROM article
-          WHERE id = #{id}
-          """)
-  public void deleteArticle(@Param("id") int id) ;
+      DELETE
+      FROM article
+      WHERE id = #{id}
+      """)
+  public void deleteArticle(@Param("id") int id);
 
 //  @Select("""
 //          SELECT A.*,
@@ -50,108 +50,123 @@ public interface ArticleRepository {
 //  public List<Article> getForPrintArticles();
 
   @Update("""
-          <script>
-          UPDATE article
-          <set>
-            <if test='title != null'>
-              title = #{title},
-            </if>
-            <if test='body != null'>
-              `body` = #{body},
-            </if>
-            updateDate = NOW()
-          </set>
-          WHERE id = #{id}
-          </script>
-          """)
+      <script>
+      UPDATE article
+      <set>
+        <if test='title != null'>
+          title = #{title},
+        </if>
+        <if test='body != null'>
+          `body` = #{body},
+        </if>
+        updateDate = NOW()
+      </set>
+      WHERE id = #{id}
+      </script>
+      """)
   public void modifyArticle(@Param("id") int id, @Param("title") String title, @Param("body") String body);
 
   @Select("SELECT LAST_INSERT_ID()")
   public int getLastInsertId();
 
   @Select("""
-          <script>
-          SELECT A.*,
-          M.nickname AS extra__writerName
-          FROM article AS A
-          LEFT JOIN member AS M
-          ON A.memberId = M.id
-          WHERE 1
-          <if test="boardId != 0">
-            AND A.boardId = #{boardId}
-          </if>
-          <if test="searchKeyword != ''">
-            <choose>
-                <when test="searchKeywordTypeCode == 'title'">
-                   AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-                </when>
-                <when test="searchKeywordTypeCode == 'body'">
-                   AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-                </when>
-                <otherwise>
-                  AND (
-                    A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-                    OR
-                    A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-                  )
-                </otherwise>
-            </choose>
-          </if>
-          ORDER BY A.id DESC      
-          <if test="limitTake != -1">
-            LIMIT #{limitStart}, #{limitTake}
-          </if>                   
-          </script>
-          """)
+      <script>
+      SELECT A.*,
+      M.nickname AS extra__writerName
+      FROM article AS A
+      LEFT JOIN member AS M
+      ON A.memberId = M.id
+      WHERE 1
+      <if test="boardId != 0">
+        AND A.boardId = #{boardId}
+      </if>
+      <if test="searchKeyword != ''">
+        <choose>
+            <when test="searchKeywordTypeCode == 'title'">
+               AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+            </when>
+            <when test="searchKeywordTypeCode == 'body'">
+               AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+            </when>
+            <otherwise>
+              AND (
+                A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+                OR
+                A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+              )
+            </otherwise>
+        </choose>
+      </if>
+      ORDER BY A.id DESC      
+      <if test="limitTake != -1">
+        LIMIT #{limitStart}, #{limitTake}
+      </if>                   
+      </script>
+      """)
   List<Article> getForPrintArticles(@Param("boardId") int boardId,
-             @Param("searchKeywordTypeCode") String searchKeywordTypeCode,
-             @Param("searchKeyword") String searchKeyword, @Param("limitStart") int limitStart,
-             @Param("limitTake") int limitTake);
+                                    @Param("searchKeywordTypeCode") String searchKeywordTypeCode,
+                                    @Param("searchKeyword") String searchKeyword, @Param("limitStart") int limitStart,
+                                    @Param("limitTake") int limitTake);
 
   @Select("""
-          <script>          
-          SELECT COUNT(*) AS cnt        
-          FROM article AS A          
-          WHERE 1
-          <if test="boardId != 0">
-            AND A.boardId = #{boardId}
-          </if>
-          <if test="searchKeyword != ''">
-            <choose>
-               <when test="searchKeywordTypeCode == 'title'">
-                  AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-               </when>
-               <when test="searchKeywordTypeCode == 'body'">
-                  AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-               </when>
-               <otherwise>
-                  AND (
-                    A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-                    OR
-                    A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-               </otherwise>
-            </choose>
-          </if>
-          </script>          
-          """)
+      <script>          
+      SELECT COUNT(*) AS cnt        
+      FROM article AS A          
+      WHERE 1
+      <if test="boardId != 0">
+        AND A.boardId = #{boardId}
+      </if>
+      <if test="searchKeyword != ''">
+        <choose>
+           <when test="searchKeywordTypeCode == 'title'">
+              AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+           </when>
+           <when test="searchKeywordTypeCode == 'body'">
+              AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+           </when>
+           <otherwise>
+              AND (
+                A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+                OR
+                A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+           </otherwise>
+        </choose>
+      </if>
+      </script>          
+      """)
   int getArticlesCount(@Param("boardId") int boardId, @Param("searchKeywordTypeCode") String searchKeywordTypeCode, @Param("searchKeyword") String searchKeyword);
 
   @Update("""
-          <script>          
-            UPDATE article
-            SET hitCount = hitCount + 1
-            WHERE id = #{id}     
-          </script>          
-          """)
+      <script>          
+        UPDATE article
+        SET hitCount = hitCount + 1
+        WHERE id = #{id}     
+      </script>          
+      """)
   int increaseHitCount(@Param("id") int id);
 
   @Select("""
-          <script>          
-          SELECT hitCount
-          FROM article
-          WHERE id = #{id}                    
-          </script>          
+      <script>          
+      SELECT hitCount
+      FROM article
+      WHERE id = #{id}                    
+      </script>          
+      """)
+  int getArticleHitCount(@Param("id") int id);
+  @Update("""
+          <script>
+          UPDATE article
+          SET goodReactionPoint = goodReactionPoint + 1
+          WHERE id = #{id}
+          </script>
           """)
-  int getArticleHitCount(@Param("id")int id);
-
+  int increaseGoodReactionPoint(@Param("id") int id);
+  @Update("""
+          <script>
+          UPDATE article
+          SET badReactionPoint = badReactionPoint + 1
+          WHERE id = #{id}
+          </script>
+          """)
+  int increaseBadReactionPoint(@Param("id") int id);
 }
