@@ -2,6 +2,7 @@ package com.sbs.exam.sb_app_2022_10_13.repository;
 
 import com.sbs.exam.sb_app_2022_10_13.vo.Article;
 import org.apache.ibatis.annotations.*;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -160,7 +161,7 @@ public interface ArticleRepository {
           WHERE id = #{id}
           </script>
           """)
-  int increaseGoodReactionPoint(@Param("id") int id);
+  public int increaseGoodReactionPoint(@Param("id") int id);
   @Update("""
           <script>
           UPDATE article
@@ -168,5 +169,23 @@ public interface ArticleRepository {
           WHERE id = #{id}
           </script>
           """)
-  int increaseBadReactionPoint(@Param("id") int id);
+  public int increaseBadReactionPoint(@Param("id") int id);
+
+  @Update("""
+          <script>
+          UPDATE article
+          SET goodReactionPoint = goodReactionPoint - 1
+          WHERE id = #{id}
+          </script>
+          """)
+  public int decreaseGoodReactionPoint(@Param("id") int id);
+
+  @Update("""
+          <script>
+          UPDATE article
+          SET badReactionPoint = badReactionPoint - 1
+          WHERE id = #{id}
+          </script>
+          """)
+  public int decreaseBadReactionPoint(@Param("id") int id);
 }

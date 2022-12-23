@@ -8,14 +8,13 @@ import org.springframework.stereotype.Service;
 public class ReactionPointService {
   private ReactionPointRepository reactionPointRepository;
   private ArticleService articleService;
-
   public ReactionPointService(ReactionPointRepository reactionPointRepository, ArticleService articleService) {
     this.reactionPointRepository = reactionPointRepository;
     this.articleService = articleService;
   }
 
   public ResultData actorCanMakeReactionPoint(int actorId, String relTypeCode, int relId) {
-    if(actorId == 0){
+    if (actorId == 0) {
       return ResultData.from("F-1", "로그인 후 이용해주세요.");
     }
 
@@ -27,7 +26,6 @@ public class ReactionPointService {
 
     return ResultData.from("S-1", "리액션이 가능합니다.", "sumReactionPointByMemberId", sumReactionPointByMemberId);
   }
-
   public ResultData addGoodReactionPoint(int actorId, String relTypeCode, int relId) {
     reactionPointRepository.addGoodReactionPoint(actorId, relTypeCode, relId);
 
@@ -42,12 +40,36 @@ public class ReactionPointService {
 
   public ResultData addBadReactionPoint(int actorId, String relTypeCode, int relId) {
     reactionPointRepository.addBadReactionPoint(actorId, relTypeCode, relId);
-
     switch (relTypeCode) {
       case "article":
         articleService.increaseBadReactionPoint(relId);
         break;
     }
+
     return ResultData.from("S-1", "싫어요 처리 되었습니다.");
+  }
+
+  public ResultData deleteGoodReactionPoint(int actorId, String relTypeCode, int relId) {
+    reactionPointRepository.deleteReactionPoint(actorId, relTypeCode, relId);
+
+    switch (relTypeCode) {
+      case "article":
+        articleService.decreaseGoodReactionPoint(relId);
+        break;
+    }
+
+    return ResultData.from("S-1", "좋아요 수가 감소 되었습니다.");
+  }
+
+  public ResultData deleteBadReactionPoint(int actorId, String relTypeCode, int relId) {
+    reactionPointRepository.deleteReactionPoint(actorId, relTypeCode, relId);
+
+    switch (relTypeCode) {
+      case "article":
+        articleService.decreaseBadReactionPoint(relId);
+        break;
+    }
+
+    return ResultData.from("S-1", "싫어요 수가 감소 되었습니다.");
   }
 }
