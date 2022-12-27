@@ -1,11 +1,21 @@
 package com.sbs.exam.sb_app_2022_10_13.util;
 
+import org.apache.ibatis.annotations.Insert;
+
 import java.net.URLEncoder;
 
 public class Ut {
   public static boolean empty(Object obj) {
     if(obj == null){
       return true;
+    }
+
+    if(obj instanceof Integer){
+      return ((int)obj) == 0;
+    }
+
+    if(obj instanceof Long){
+      return ((Long)obj) == 0;
     }
 
     if ( obj instanceof String == false){
