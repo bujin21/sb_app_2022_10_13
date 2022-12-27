@@ -90,8 +90,7 @@
                 </c:if>
 
                 <c:if test="${actorCanCancelGoodReaction}">
-                  <a href="/usr/reactionPoint/doCancelGoodReaction?
-                  relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs btn-primary">
+                  <a href="/usr/reactionPoint/doCancelGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs btn-primary">
                     좋아요 👍
                   </a>
                   &nbsp;
@@ -105,8 +104,7 @@
                     좋아요 👍
                   </a>
                   &nbsp;
-                  <a href="/usr/reactionPoint/doCancelBadReaction?
-                  relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs btn-secondary">
+                  <a href="/usr/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs btn-secondary">
                     싫어요 👎
                   </a>
                 </c:if>

@@ -20,8 +20,8 @@ public class ReactionPointService {
 
     int sumReactionPointByMemberId = reactionPointRepository.getSumReactionPointByMemberId(relTypeCode, relId, actorId);
 
-    if (sumReactionPointByMemberId != 0) {
-      return ResultData.from("F-2", "리액션이 불가능합니다.", "sumReactionPointByMemberId", sumReactionPointByMemberId);
+    if(sumReactionPointByMemberId != 0){
+      return ResultData.from("F-2", "리액션이 가능합니다.", "sumReactionPointByMemberId", sumReactionPointByMemberId);
     }
 
     return ResultData.from("S-1", "리액션이 가능합니다.", "sumReactionPointByMemberId", sumReactionPointByMemberId);
